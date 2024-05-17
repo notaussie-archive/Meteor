@@ -1,0 +1,4 @@
+guilded.py==1.13.1
+aiohttp-client-cache==0.11.0
+jikanpy-v4==1.0.2
+pyyaml==6.0.1
