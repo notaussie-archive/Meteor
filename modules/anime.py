@@ -91,7 +91,7 @@ class Anime(commands.Cog):
 
             # Create the embed
             embed = guilded.Embed(
-                title="__" + data["title"] + "__",
+                title="__" + data["title_english"] or data["title"] + "__",
                 color=guilded.Color.dark_theme(),
                 url=data["url"],
             )
@@ -163,7 +163,7 @@ class Anime(commands.Cog):
 
             # Create the embed
             embed = guilded.Embed(
-                title="__" + data["title"] + "__",
+                title="__" + data["title_english"] or data["title"] + "__",
                 color=guilded.Color.dark_theme(),
                 url=data["url"],
             )
