@@ -92,7 +92,10 @@ class Anime(commands.Cog):
             embed.set_image(url=data["images"]["jpg"]["image_url"])
 
             # Set the footer
-            embed.set_footer(text="Powered by Jikan.moe (MyAnimeList.net)")
+            embed.set_footer(
+                icon_url=self.config["malLogo"],
+                text="Powered by MyAnimeList.net",
+            )
 
             await ctx.reply(embed=embed)
 
