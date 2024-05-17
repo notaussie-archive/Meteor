@@ -2,10 +2,23 @@
     <img src="./assets/logo.webp" width="200">
 </div>
 
+<br>
+
 # `✨` Meteor
 Meteor is a free and open source Guilded bot made for any community.
 
+<br>
+
+
+# `💠` Commands
+- Anime.
+- - Top anime.
+- - Random anime.
+- - Anime searching.
+
+<br>
+ 
 # `📃` Features
-- MyAnimeList.net searching. *(With built-in cache)*
+- Speedy responses.
 - Powerful error handling.
 - Easy to use commands.
