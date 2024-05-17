@@ -12,7 +12,7 @@ with open("./config.yaml", "r") as f:
 
 # Create the bot
 bot = commands.Bot(
-    command_prefix=config["prefix"],
+    command_prefix=config["guilded"]["prefix"],
     help_command=commands.MinimalHelpCommand(),
     features=guilded.ClientFeatures(
         experimental_event_style=True,
@@ -48,4 +48,4 @@ async def on_ready():
     console.success(f'Logged in as "{bot.user.name}"!')
 
 
-bot.run(config["token"])
+bot.run(config["guilded"]["token"])

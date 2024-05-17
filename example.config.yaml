@@ -1,4 +1,16 @@
-token: "[ GUILDED.GG TOKEN ]"
-prefix: "/m "
-admins: ["[ GUILDED.GG USER ID ]"]
-malLogo: "https://cdn.gilcdn.com/MediaChannelUpload/5b80f2e6617917cec042ea345ef21432-Full.webp?w=512&h=512&Expires=1714720098&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uZ2lsY2RuLmNvbS8qIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzE0NzIwMDk4fSwiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjEwMy4yMzcuMTguMzAifX19XX0_&Signature=Go0LOdGaIP3U6-i5WMMBPvqkhAnPk3UelxcM-DsTxr4t69sMKv3KXRRhKxy2K6oQb6%7EMz1v3joxfwZaOdxb%7E9vFkshNF39Nm68SlwkUKyWI-f2x7fFn2V3SNeh3pvt9JzF265ljeymWaAVkPPV5nJynD26tOFEfudIviblLwrpjxLXYx6xLMfvAS1TYF%7EW0XhNiwsZDSgFxcur3j%7E0yRnPmqg-5PtZEmv9lvnvNaFJQNIu6eXKsM-SM0c0zBHaBUfdXuvKQTqJCeTSoou6aawIOFXkHTUGQp8FmSmXR9Vf2t60B1BPzJKJpcz86ggM2L34xY6Z6p4NNpVmXneqnMqw__&Key-Pair-Id=K1FFKFZRWAZSB"
+guilded:
+  token: ""
+  prefix: "/m "
+  admins: []
+
+# All asset URLs
+# NOTE: If you don't have replacements for these values then please don't change them
+assets:
+  malLogo: "https://raw.githubusercontent.com/NotAussie/Meteor/main/assets/mal.png"
+
+mongodb:
+  # The URI to use when connecting
+  uri: ""
+
+  # The database to use when storing data
+  database: "Meteor"
