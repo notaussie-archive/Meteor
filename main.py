@@ -1,7 +1,7 @@
 # Import required modules
 import guilded
 from guilded.ext import commands
-from jsprint import JSP
+from utils.jsprint import JSP
 import subprocess
 import yaml
 import os

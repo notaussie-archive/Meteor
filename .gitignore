@@ -1,9 +1,6 @@
 # Configuration
 config.yaml
 
-# Temp ignore
-dump.json
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

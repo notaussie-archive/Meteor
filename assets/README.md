@@ -1,0 +1,1 @@
+This folder contains assets to be displayed in Guilded.
