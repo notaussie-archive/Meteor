@@ -1,0 +1,1 @@
+from .animeviews import DetailedAnimeView

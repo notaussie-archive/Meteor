@@ -2,9 +2,9 @@
 import guilded
 from guilded.ext import commands
 from utils.jsprint import JSP
+from views import DetailedAnimeView
 from aiohttp_client_cache import CachedSession, CacheBackend
 from jikanpy import AioJikan
-import json
 
 
 # Create the anime module
@@ -66,7 +66,7 @@ class Anime(commands.Cog):
                 # Add the field
                 embed.add_field(
                     name=f"#{str(i + 1)} - [{data['title_english'] or data['title']}]({data['url']})",
-                    value=f"› Total episodes: {str(data['episodes'])}\n› Age rating: {str(data['rating']).split(' ')[0]}",
+                    value=f"› Total episodes: {str(data['episodes'])}\n› Age rating: {str(data['rating']).split(' ')[0].upper()}",
                     inline=False,
                 )
 
@@ -89,52 +89,8 @@ class Anime(commands.Cog):
             # Store the data
             data = result["data"]
 
-            # Create the embed
-            embed = guilded.Embed(
-                title="__" + (data["title_english"] or data["title"]) + "__",
-                color=guilded.Color.dark_theme(),
-                url=data["url"],
-            )
-
-            # Set the age rating
-            embed.add_field(
-                name="Age Rating",
-                value="› " + str(data["rating"]).split(" ")[0],
-                inline=True,
-            )
-
-            # Set the rating
-            embed.add_field(
-                name="Rating",
-                value="› " + str(data["score"]),
-                inline=True,
-            )
-
-            # Set the episode count
-            embed.add_field(
-                name="Total Episodes",
-                value="› " + str(data["episodes"]),
-                inline=True,
-            )
-
-            # Set the rank
-            if data["rank"]:
-                embed.add_field(
-                    name="MyAnimeList Rank",
-                    value="› #" + str(data["rank"]),
-                    inline=True,
-                )
-
-            # Set the embed image
-            embed.set_image(url=data["images"]["jpg"]["image_url"])
-
-            # Set the footer
-            embed.set_footer(
-                icon_url=self.config["assets"]["malLogo"],
-                text="Powered by MyAnimeList.net",
-            )
-
-            await ctx.reply(embed=embed)
+            # Send a detailed anime view
+            await ctx.reply(embed=DetailedAnimeView(data))
 
     @anime.command()
     @commands.cooldown(5, 30, commands.BucketType.user)
@@ -161,52 +117,8 @@ class Anime(commands.Cog):
             # Store the first anime in the result data
             data = result["data"][0]
 
-            # Create the embed
-            embed = guilded.Embed(
-                title="__" + (data["title_english"] or data["title"]) + "__",
-                color=guilded.Color.dark_theme(),
-                url=data["url"],
-            )
-
-            # Set the age rating
-            embed.add_field(
-                name="Age Rating",
-                value="› " + str(data["rating"]).split(" ")[0],
-                inline=True,
-            )
-
-            # Set the rating
-            embed.add_field(
-                name="Rating",
-                value="› " + str(data["score"]),
-                inline=True,
-            )
-
-            # Set the episode count
-            embed.add_field(
-                name="Total Episodes",
-                value="› " + str(data["episodes"]),
-                inline=True,
-            )
-
-            # Set the rank
-            if data["rank"]:
-                embed.add_field(
-                    name="MyAnimeList Rank",
-                    value="› #" + str(data["rank"]),
-                    inline=True,
-                )
-
-            # Set the embed image
-            embed.set_image(url=data["images"]["jpg"]["image_url"])
-
-            # Set the footer
-            embed.set_footer(
-                icon_url=self.config["assets"]["malLogo"],
-                text="Powered by MyAnimeList.net",
-            )
-
-            await ctx.reply(embed=embed)
+            # Send a detailed anime view
+            await ctx.reply(embed=DetailedAnimeView(data))
 
 
 # Setup the cog and add it to the bot

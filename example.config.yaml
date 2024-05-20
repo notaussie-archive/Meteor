@@ -1,6 +1,9 @@
 guilded:
   token: ""
-  prefix: "/m "
+  prefixes: [
+    "/m ",
+    "/meteor ",
+  ]
   admins: []
 
 # All asset URLs

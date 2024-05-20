@@ -14,6 +14,7 @@ class Information(commands.Cog):
         self.bot: commands.Bot = bot
         self.config: dict = bot.config
         self.console: JSP = bot.console
+        self.commandsRan: int = 0
 
         # Get the SHA
         commandResult = subprocess.check_output(
@@ -39,6 +40,10 @@ class Information(commands.Cog):
         # Store the branch
         self.branch: str | None = branch
 
+    @commands.Cog.listener()
+    async def on_command_completion(self, ctx: commands.Context):
+        self.commandsRan += 1
+
     @commands.command()
     async def info(self, ctx: commands.Context):
         """Shows information about the bot"""
@@ -56,10 +61,24 @@ class Information(commands.Cog):
             inline=False,
         )
 
+        embed.add_field(
+            name="🌠 Commands ran",
+            value=f"› {str(self.commandsRan)}",
+            inline=False,
+        )
+
         # Add Git field
         embed.add_field(
             name="🧵 Version",
             value=f"› {self.branch.title()} (`{self.sha}`)",
+            inline=False,
+        )
+
+        # Add prefixes field
+        embed.add_field(
+            name="📓 Prefixes",
+            value=f"› "
+            + ", ".join([f"`{prefix}`" for prefix in self.bot.command_prefix]),
             inline=False,
         )
 

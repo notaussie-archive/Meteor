@@ -1,0 +1,1 @@
+This folder contains files related to `Beanie ODM`, be careful when editing any defined `Document`! 
