@@ -2,7 +2,7 @@
 import guilded
 from guilded.ext import commands
 from utils.jsprint import JSP
-import traceback
+from utils.detailedtrace import getDetailed
 
 
 # Create the anime module
@@ -91,28 +91,22 @@ class Errors(commands.Cog):
 
             # If none of the predefined handlers were called then use the blanket handler
             else:
-                try:
-                    raise error
-                except Exception as e:
-                    # Create a traceback from the error
-                    tb = "".join(traceback.format_exception(e, e, e.__traceback__))
+                # Print the error to console
+                self.console.error(
+                    f"An error occurred while running {ctx.command.qualified_name}"
+                )
+                self.console.trace(getDetailed(error))
 
-                    # Print the error to console
-                    self.console.error(
-                        f"An error occurred while running {ctx.command.qualified_name}"
-                    )
-                    self.console.trace(tb)
-
-                    # Send the error message
-                    await ctx.reply(
-                        embed=guilded.Embed(
-                            title="Uh oh",
-                            description="Something went wrong while we were processing your request. :<",
-                            color=guilded.Color.dark_theme(),
-                        ),
-                        private=True,
-                    )
-                    return
+                # Send the error message
+                await ctx.reply(
+                    embed=guilded.Embed(
+                        title="Uh oh",
+                        description="Something went wrong while we were processing your request. :<",
+                        color=guilded.Color.dark_theme(),
+                    ),
+                    private=True,
+                )
+                return
 
         except:
             ...

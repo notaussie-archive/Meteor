@@ -73,7 +73,6 @@ async def on_ready():
     console.info("Beanie initialization complete")
 
     # Print success/info stack
-        
     console.info(f'Logged into Guilded as "{bot.user.name}"')
     console.info(f'Using database "{config["mongodb"]["database"]}" on Mongo cluster')
 
