@@ -53,3 +53,5 @@ def DetailedAnimeView(data: dict) -> guilded.Embed:
         icon_url=malLogo,
         text="Powered by MyAnimeList.net",
     )
+
+    return embed

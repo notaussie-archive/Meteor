@@ -89,4 +89,6 @@ class OnBotAdded(commands.Cog):
 
 # Setup the cog and add it to the bot
 def setup(bot):
-    bot.add_cog(OnBotAdded(bot))
+    # Disabled for later development
+    # bot.add_cog(OnBotAdded(bot))
+    ...
