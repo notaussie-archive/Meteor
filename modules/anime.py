@@ -5,6 +5,7 @@ from utils.jsprint import JSP
 from views import DetailedAnimeView
 from aiohttp_client_cache import CachedSession, CacheBackend
 from jikanpy import AioJikan
+from utils.assets import malLogo
 
 
 # Create the anime module
@@ -72,7 +73,7 @@ class Anime(commands.Cog):
 
             # Set the footer
             embed.set_footer(
-                icon_url=self.config["assets"]["malLogo"],
+                icon_url=malLogo,
                 text="Powered by MyAnimeList.net",
             )
 
