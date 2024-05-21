@@ -8,7 +8,7 @@ import yaml
 import os
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
-from database import all
+from database import __all__
 import pymongo
 
 # Open the config
@@ -60,16 +60,15 @@ async def on_ready():
         await client.admin.command("ping")
         console.success("Pinged Mongo successfully")
     except Exception as e:
-        if  isinstance(e, pymongo.errors.OperationFailure):
+        if isinstance(e, pymongo.errors.OperationFailure):
             console.warn("Failed to ping Mongo")
-            
+
         else:
             console.error("Unexpected error occurred while pinging Mongo")
             console.trace(str(e))
 
-
     # Initialize Beanie using the previously created Motor client
-    await init_beanie(client[config["mongodb"]["database"]], document_models=all)
+    await init_beanie(client[config["mongodb"]["database"]], document_models=__all__)
     console.info("Beanie initialization complete")
 
     # Print success/info stack

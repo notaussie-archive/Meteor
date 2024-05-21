@@ -1,1 +1,1 @@
-from .documents import __all__ as all
+from .documents import __all__

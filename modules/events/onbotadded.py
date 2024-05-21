@@ -27,10 +27,12 @@ class OnBotAdded(commands.Cog):
         # Run the operation in a try expect block
         try:
             # Create a new server document
-            server = Server()
+            server = Server(serverId=event.server_id)
 
-            # Update the server or insert it
-            await server.save()
+            # Check if the server already exists
+            if Server.find_one(Server.serverId == event.server_id) is None:
+                # Insert the server
+                await server.save()
 
         # Expect any errors
         except Exception as e:
@@ -89,6 +91,4 @@ class OnBotAdded(commands.Cog):
 
 # Setup the cog and add it to the bot
 def setup(bot):
-    # Disabled for later development
-    # bot.add_cog(OnBotAdded(bot))
-    ...
+    bot.add_cog(OnBotAdded(bot))
