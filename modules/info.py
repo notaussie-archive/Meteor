@@ -1,6 +1,8 @@
-# Import required modules
+# Guilded imports
 import guilded
 from guilded.ext import commands
+
+# Utility imports
 from utils.jsprint import JSP
 import subprocess
 

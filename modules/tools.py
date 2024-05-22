@@ -1,10 +1,14 @@
-# Import required modules
+# Guilded imports
 import guilded
 from guilded.ext import commands
+
+# Utility imports
 from utils.jsprint import JSP
 
-# Import views
+# View imports
 from views import PartialServerView
+
+from database.documents import Server
 
 
 # Create the tools module

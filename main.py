@@ -1,15 +1,18 @@
-# Import required modules
+# Guilded imports
 import guilded
 from guilded.ext import commands
-import pymongo.errors
+
+# Built-in imports
 from utils.jsprint import JSP
-import subprocess
 import yaml
 import os
-from beanie import init_beanie
+
+# Database imports
 from motor.motor_asyncio import AsyncIOMotorClient
+from beanie import init_beanie
 from database import __all__
-import pymongo
+from pymongo.errors import OperationFailure
+
 
 # Open the config
 with open("./config.yaml", "r") as f:
@@ -60,7 +63,7 @@ async def on_ready():
         await client.admin.command("ping")
         console.success("Pinged Mongo successfully")
     except Exception as e:
-        if isinstance(e, pymongo.errors.OperationFailure):
+        if isinstance(e, OperationFailure):
             console.warn("Failed to ping Mongo")
 
         else:

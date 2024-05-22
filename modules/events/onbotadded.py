@@ -1,10 +1,12 @@
-# Import required modules
+# Guilded imports
 import guilded
 from guilded.ext import commands
+
+# Utility imports
 from utils.jsprint import JSP
 from utils.detailedtrace import getDetailed
 
-# Import documents
+# Database imports
 from database.documents import Server
 
 
@@ -30,7 +32,7 @@ class OnBotAdded(commands.Cog):
             server = Server(serverId=event.server_id)
 
             # Check if the server already exists
-            if Server.find_one(Server.serverId == event.server_id) is None:
+            if await Server.find_one(Server.serverId == event.server_id) is None:
                 # Insert the server
                 await server.save()
 

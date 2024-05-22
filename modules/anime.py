@@ -1,11 +1,17 @@
-# Import required modules
+# Guilded imports
 import guilded
 from guilded.ext import commands
+
+# Utility imports
 from utils.jsprint import JSP
+from utils.assets import malLogo
+
+# View imports
 from views import DetailedAnimeView
+
+# Jikan imports
 from aiohttp_client_cache import CachedSession, CacheBackend
 from jikanpy import AioJikan
-from utils.assets import malLogo
 
 
 # Create the anime module
