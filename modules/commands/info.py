@@ -5,9 +5,16 @@ from guilded.ext import commands
 # Utility imports
 from utils.jsprint import JSP
 import subprocess
+import time
+
+# Database imports
+from database.documents import Server
+
+# Type imports
+from motor.motor_asyncio import AsyncIOMotorClient
 
 
-# Create the anime module
+# Create the information module
 class Information(commands.Cog):
     def __init__(self, bot) -> None:
         super().__init__()
@@ -17,6 +24,7 @@ class Information(commands.Cog):
         self.config: dict = bot.config
         self.console: JSP = bot.console
         self.commandsRan: int = 0
+        self.client: AsyncIOMotorClient = bot.dbClient
 
         # Get the SHA
         commandResult = subprocess.check_output(
@@ -73,6 +81,21 @@ class Information(commands.Cog):
         embed.add_field(
             name="🧵 Version",
             value=f"› {self.branch.title()} (`{self.sha}`)",
+            inline=False,
+        )
+
+        # Store the latency
+        latency = self.bot.latency
+
+        # Get the database latency
+        databaseTimeStart = time.time()
+        results = await self.client.admin.command("ping")
+        databaseTimeEnd = time.time()
+
+        # Add ping field
+        embed.add_field(
+            name="🏓 Ping",
+            value=f"› Internal: `{latency * 1000:.2f}`ms\n› Database: `{(databaseTimeEnd - databaseTimeStart) * 1000:.2f}`ms",
             inline=False,
         )
 

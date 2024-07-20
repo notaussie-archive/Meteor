@@ -1,19 +1,27 @@
 guilded:
-  token: ""
+  # Your Guilded.gg bot token
+  token: "[ Your Guilded.gg bot token ]"
+
+  # Command prefixes
   prefixes: [
-    "/m ",
+    "/m ",      # Use "/m" or "/meteor" to invoke commands
     "/meteor ",
   ]
-  admins: []
 
-# All asset URLs
-# NOTE: If you don't have replacements for these values then please don't change them
-assets:
-  malLogo: "https://raw.githubusercontent.com/NotAussie/Meteor/main/assets/mal.png"
+  # Admins (Guilded.gg account IDs)
+  admins:
+    - "[ Your Guilded.gg account ID ]"
+
+igdb:
+  # Your Twitch.tv application secret
+  secret: "[ Your Twitch.tv application secret ]"
+
+  # Your Twitch.tv application ID
+  id: "[ Your Twitch.tv application ID ]"
 
 mongodb:
-  # The URI to use when connecting
-  uri: ""
+  # Your MongoDB server URI
+  uri: "[ Your MongoDB server URI ]"
 
-  # The database to use when storing data
+  # Database name
   database: "Meteor"

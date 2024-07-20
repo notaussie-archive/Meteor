@@ -91,8 +91,23 @@ class Errors(commands.Cog):
 
                 await ctx.reply(embed=embed, private=True)
 
+            elif (
+                isinstance(error, guilded.BadRequest)
+                and str(error)
+                == "BadRequest: 400 (BadRequest): Replies to private messages must also be private"
+            ):
+                # Create error embed
+                embed = guilded.Embed(
+                    title="Uh oh",
+                    description=f"The bot responded with the wrong privacy type.",
+                    color=guilded.Color.dark_theme(),
+                )
+
+                await ctx.reply(embed=embed, private=ctx.message.private)
+
             # If none of the predefined handlers were called then use the blanket handler
             else:
+
                 # Print the error to console
                 self.console.error(
                     f"An error occurred while running {ctx.command.qualified_name}"
@@ -112,6 +127,8 @@ class Errors(commands.Cog):
 
         except:
             ...
+
+        self.console.info(f"Handled an error gracefully")
 
 
 # Setup the cog and add it to the bot

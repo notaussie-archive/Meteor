@@ -33,6 +33,10 @@ bot.config = config
 console = JSP()
 bot.console = console
 
+# Create the Motor client
+client = AsyncIOMotorClient(config["mongodb"]["uri"])
+bot.dbClient = client
+
 
 # Create the module loader
 def loadModules(bot: commands.Bot):
@@ -40,6 +44,10 @@ def loadModules(bot: commands.Bot):
     for root, dirs, files in os.walk("./modules"):
         for file in files:
             if file.endswith(".py"):
+                # If the file begins with "_" then skip it
+                if file.startswith("_"):
+                    continue
+
                 # Load the extension using dot-qualified name
                 cog_path = os.path.relpath(os.path.join(root, file), start="./modules")
                 bot.load_extension(
@@ -54,9 +62,6 @@ loadModules(bot)
 @bot.event
 async def on_ready():
     console.success("Connected to Guilded")
-
-    # Create the Motor client
-    client = AsyncIOMotorClient(config["mongodb"]["uri"])
 
     # Check if the cluster is online
     try:
@@ -77,6 +82,14 @@ async def on_ready():
     # Print success/info stack
     console.info(f'Logged into Guilded as "{bot.user.name}"')
     console.info(f'Using database "{config["mongodb"]["database"]}" on Mongo cluster')
+
+
+@bot.event
+async def on_command_completion(ctx: commands.Context):
+
+    console.info(
+        f'{ctx.author.id} ran "{ctx.command.qualified_name}" in {ctx.channel.id}'
+    )
 
 
 bot.run(config["guilded"]["token"])

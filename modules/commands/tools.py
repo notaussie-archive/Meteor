@@ -8,8 +8,6 @@ from utils.jsprint import JSP
 # View imports
 from views import PartialServerView
 
-from database.documents import Server
-
 
 # Create the tools module
 class Tools(commands.Cog):
