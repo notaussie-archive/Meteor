@@ -5,6 +5,8 @@ from guilded.ext import commands
 # Utility imports
 from utils.jsprint import JSP
 from utils.igdb import Client
+from utils.assets import igdbLogo
+from aiohttp_client_cache import CachedSession, CacheBackend
 
 # View imports
 from views import GroupCommandsView
@@ -20,6 +22,18 @@ class Games(commands.Cog):
         self.config: dict = bot.config
         self.console: JSP = bot.console
         self.client = Client(self.config["igdb"]["secret"], self.config["igdb"]["id"])
+
+        # Setup an aiohttp cache
+        self.igdbCache: CacheBackend = CacheBackend(
+            cache_name="igdb-cache",
+            include_headers=True,
+            allowed_codes=(
+                200,
+                304,
+                404,
+            ),
+            expire_after=900,
+        )
 
     @commands.group(description="Game/gaming related commands")
     async def games(self, ctx: commands.Context):
@@ -38,9 +52,10 @@ class Games(commands.Cog):
         data = await self.client.request(
             "/games/",
             "get",
+            cache=self.igdbCache,
             params={
                 "search": query,
-                "fields": "id,name,summary,age_ratings.rating,url",
+                "fields": "id,name,summary",
                 "limit": 1,
             },
         )
@@ -67,14 +82,9 @@ class Games(commands.Cog):
             url=game["url"],
         )
 
-        # Set the age rating
-        # embed.add_field(
-        #     name="Age Rating",
-        #     value="› " + data["rating"],
-        #     inline=True,
-        # )
+        embed.set_footer(icon_url=igdbLogo, text="Powered by IGDB")
 
-        await ctx.reply(game, embed=embed)
+        await ctx.reply(embed=embed)
 
 
 # Setup the cog and add it to the bot

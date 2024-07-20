@@ -25,7 +25,7 @@ class Anime(commands.Cog):
         self.config: dict = bot.config
         self.console: JSP = bot.console
 
-        # Setup an AioHTTP cache
+        # Setup an aiohttp cache
         self.jikanCache: CacheBackend = CacheBackend(
             cache_name="jikan-cache",
             include_headers=True,

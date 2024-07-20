@@ -8,11 +8,13 @@ from aiohttp_client_cache import CachedSession, CacheBackend
 
 # Utility imports
 from datetime import datetime, timedelta
-from typing import Literal, Any
+from typing import Literal
+from utils.jsprint import JSP
 import backoff
-import asyncio
 
 baseUrl = "https://api.igdb.com/v4"
+
+console = JSP()
 
 
 # Create the client
@@ -69,15 +71,12 @@ class Client:
         self,
         route: str,
         method: Literal["get", "post", "put", "patch", "delete"],
-        clientSession: ClientSession | CachedSession = None,
+        cache: CacheBackend = None,
         params: dict = {},
         body: str = None,
     ) -> dict | list:
         """Makes a request to IGDB.com using the provided session. (Will create a session if not provided)"""
-        if not clientSession:
-            clientSession = ClientSession()
-
-        async with clientSession as session:
+        async with CachedSession(cache=cache) as session:
 
             # Check if the token has expired or doesn't exist
             if not self.accessToken or (datetime.now() > self.expiryDate):
@@ -100,5 +99,10 @@ class Client:
 
             # Get the request's data
             data: dict = await resp.json()
+
+            # Print debug statement
+            console.debug(
+                f"Requested {baseUrl + route} and received {resp.status} status"
+            )
 
             return data
