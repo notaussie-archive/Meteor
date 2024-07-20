@@ -5,3 +5,4 @@ pyyaml==6.0.1
 motor==3.5.1
 pydantic==2.8.2
 beanie==1.26.0
+backoff==2.2.1

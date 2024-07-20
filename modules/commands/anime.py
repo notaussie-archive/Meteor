@@ -8,6 +8,7 @@ from utils.assets import malLogo
 
 # View imports
 from views import DetailedAnimeView
+from views import GroupCommandsView
 
 # Jikan imports
 from aiohttp_client_cache import CachedSession, CacheBackend
@@ -43,15 +44,12 @@ class Anime(commands.Cog):
             return
 
         await ctx.reply(
-            embed=guilded.Embed(
-                title="Top 5 MAL animes",
-                color=guilded.Color.dark_theme(),
-            )
+            embed=GroupCommandsView(ctx, self.anime),
+            private=ctx.message.private,
         )
 
-    @anime.command()
+    @anime.command(description="Gets the top animes from MAL")
     async def top(self, ctx: commands.Context):
-        """Gets the top animes from `MyAnimeList.net`"""
         async with AioJikan(
             session=CachedSession(cache=self.jikanCache),
         ) as client:
@@ -80,15 +78,14 @@ class Anime(commands.Cog):
             # Set the footer
             embed.set_footer(
                 icon_url=malLogo,
-                text="Powered by MyAnimeList.net",
+                text="Powered by MAL",
             )
 
             await ctx.reply(embed=embed)
 
-    @anime.command()
+    @anime.command(description="Gets a random anime from MAL")
     @commands.cooldown(5, 60, commands.BucketType.user)
     async def random(self, ctx: commands.Context):
-        """Gets a random anime from `MyAnimeList.net`"""
         async with AioJikan() as client:
             # Request to MAL
             result = await client.random("anime")
@@ -99,10 +96,9 @@ class Anime(commands.Cog):
             # Send a detailed anime view
             await ctx.reply(embed=DetailedAnimeView(data))
 
-    @anime.command()
+    @anime.command(description="Searches MAL and returns an anime matching your query")
     @commands.cooldown(5, 30, commands.BucketType.user)
     async def search(self, ctx: commands.Context, *, query: str):
-        """Searches `MyAnimeList.net` and returns an anime matching your query"""
         async with AioJikan(
             session=CachedSession(cache=self.jikanCache),
         ) as client:
