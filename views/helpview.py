@@ -18,7 +18,7 @@ def GroupCommandsView(ctx: commands.Context, group: commands.Group) -> guilded.E
         # Format the string and append it to commands
         commands = (
             commands
-            + f"`{ctx.prefix}{command.qualified_name}` - {command.description.removesuffix('.') if command.description else 'No description given'}.\n"
+            + f"`{ctx.prefix}{command.qualified_name}` - {command.description or 'No description'}.\n"
         )
 
     embed.add_field(
