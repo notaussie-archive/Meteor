@@ -9,7 +9,7 @@ from utils.assets import igdbLogo
 from aiohttp_client_cache import CachedSession, CacheBackend
 
 # View imports
-from views import GroupCommandsView
+from views import GroupCommandsView, BasicErrorView
 
 
 # Create the games module
@@ -32,7 +32,19 @@ class Games(commands.Cog):
                 304,
                 404,
             ),
-            expire_after=900,
+            expire_after=900,  # 15 minutes
+        )
+
+        # Setup the long term cache
+        self.igdbLongCache: CacheBackend = CacheBackend(
+            cache_name="igdb-long-term-cache",
+            include_headers=True,
+            allowed_codes=(
+                200,
+                304,
+                404,
+            ),
+            expire_after=18000,  # 5 hours
         )
 
     @commands.group(description="Game/gaming related commands")
@@ -55,17 +67,16 @@ class Games(commands.Cog):
             cache=self.igdbCache,
             params={
                 "search": query,
-                "fields": "id,name,summary",
+                "fields": "id,name,summary,url,cover.image_id,rating",
                 "limit": 1,
             },
         )
+
         # Check if no results were given
         if len(data) <= 0:
             await ctx.reply(
-                embed=guilded.Embed(
-                    title="Uh oh",
-                    description="Failed to find a game matching your search query.",
-                    color=guilded.Color.dark_theme(),
+                embed=BasicErrorView(
+                    "Failed to find a game matching your search query."
                 ),
                 private=True,
             )
@@ -77,14 +88,31 @@ class Games(commands.Cog):
         # Create the game embed
         embed = guilded.Embed(
             title=game["name"],
-            description=game["summary"],
+            description=game.get("summary", "No summary found."),
             color=guilded.Color.dark_theme(),
-            url=game["url"],
+            url=game.get("url", "https://www.igdb.com/games/"),
         )
 
+        # Set the thumbnail
+        if game.get("cover", False):
+            embed.set_image(
+                url=f"https://images.igdb.com/igdb/image/upload/t_cover_big/{str(game['cover']['image_id'])}.jpg"
+            )
+
+        # Set the rating
+        if game.get("rating", False):
+            embed.add_field(
+                name="Rating",
+                value="› {0:.1f}/10 :star:".format(game["rating"] / 10),
+                inline=True,
+            )
+
+        # Set the footer
         embed.set_footer(icon_url=igdbLogo, text="Powered by IGDB")
 
         await ctx.reply(embed=embed)
+
+        self.console.trace(game)
 
 
 # Setup the cog and add it to the bot

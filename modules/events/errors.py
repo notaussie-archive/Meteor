@@ -128,7 +128,7 @@ class Errors(commands.Cog):
         except:
             ...
 
-        self.console.info(f"Handled an error gracefully")
+        self.console.info(f"Handled an error gracefully in {ctx.server.id}")
 
 
 # Setup the cog and add it to the bot

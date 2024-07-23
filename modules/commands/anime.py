@@ -7,8 +7,7 @@ from utils.jsprint import JSP
 from utils.assets import malLogo
 
 # View imports
-from views import DetailedAnimeView
-from views import GroupCommandsView
+from views import DetailedAnimeView, GroupCommandsView, BasicErrorView
 
 # Jikan imports
 from aiohttp_client_cache import CachedSession, CacheBackend
@@ -108,10 +107,8 @@ class Anime(commands.Cog):
             # Check if result contains no data
             if result["data"] == []:
                 await ctx.reply(
-                    embed=guilded.Embed(
-                        title="Uh oh",
-                        description="Failed to find an anime matching your search query.",
-                        color=guilded.Color.dark_theme(),
+                    embed=BasicErrorView(
+                        "Failed to find an anime matching your search query."
                     ),
                     private=True,
                 )
