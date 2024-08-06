@@ -1,5 +1,5 @@
 guilded.py==1.13.2
-aiohttp-client-cache==0.11.0
+aiohttp-client-cache==0.11.1
 jikanpy-v4==1.0.2
 pyyaml==6.0.1
 motor==3.5.1
